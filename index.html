@@ -87,8 +87,8 @@ var tip_err_show = function(show,msg){
 			return true;
 		}
 
-		$('.btn_login').click(function(){
-			alert('123');
+		$('.btn_login').on('click',function(){
+			//alert('123');
 			$.get('http://39.108.8.10/pcegg/user/login',$('#form_login').serialize(),function(data){
 					if(data.code ==200){
 						let username = $('.username_login').val();
@@ -100,8 +100,8 @@ var tip_err_show = function(show,msg){
 					}
 				},'json');
 		});
-		$('.btn_regi').click(function(){
-			alert('123');
+		$('.btn_regi').on('click',function(){
+			//alert('123');
 			if(form_regi()){
 				$.get('http://39.108.8.10/pcegg/user/register',$('#form_regi').serialize(),function(data){
 					if(data.code ==200){
