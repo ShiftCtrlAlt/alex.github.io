@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0,  user-scalable=0;" name="viewport" />
+	<meta http-equiv="Cache-Control" content="no-cache"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>PC蛋蛋房间46</title>
+</head>
+<link rel="stylesheet" href="./css/main.css">
+<body class='bg'>
+	<div class='login'>
+	<div class='contain lgin'>
+		<div class="pg"></div>
+		<div class='tit login_sub'><p class="active">登录</p></div>
+		<div class='tit resgi_sub'><p >注册</p></div>
+		<form  id='form_login'>
+			<input class='dpt username_login' name='username' minlength='5' maxlength='16' placeholder="用户名（5-16位）" type="text">
+			<input class='dpt password_login' name='password' minlength='5' maxlength='16' placeholder="密码（5-16位）" type="password">
+		</form>
+		<button class='btn btn_login' onclick=''>确认登录</button>
+	</div>
+	<div class='contain regi disp_none'>
+		<div class="pg"></div>
+		<div class='tit login_sub'><p>登录</p></div>
+		<div class='tit resgi_sub'><p class="active">注册</p></div>
+		<form id='form_regi'>
+			<input class='dpt username_regi' name='username' minlength='5' maxlength='16' placeholder="用户名（5-16位）" type="text">
+			<input class='dpt password_regi' name='password' minlength='5' maxlength='16' placeholder="密码（5-16位）" type="password">
+			
+		</form>
+		<button class='btn btn_regi' onclick='' >确认注册</button>
+	</div>
+	</div>
+	<div class='tip_err'>
+		<img src="./image/err.png" alt="">
+		<p class='err_msg'></p>
+		<div class='close_err'>X</div>
+	</div>
+	<div class='timebg'></div>
+</body>
+<script src="./js/jquery-1.11.3.min.js"></script>
+<script>
+
+var tip_err_show = function(show,msg){
+	$('.err_msg').text(msg);
+	// 提示时间动画
+	if(show){
+		$('.tip_err').css('display','block');
+		$('.timebg').css('display','block');
+	}else{
+		$('.tip_err').css('display','none');
+		$('.timebg').css('display','none');
+	}
+};
+	$(document).ready(function(){
+		$('.close_err').on('click',function(){tip_err_show(false)});
+
+	 	$('.login_sub').click(function(){
+			$('.lgin').css("display","block");
+			$('.regi').css("display","none");
+		});
+		$('.resgi_sub').click(function(){
+			$('.lgin').css("display","none");
+			$('.regi').css("display","block");
+		});
+		// 表单校验
+		function form_login(){
+			if($('.username_login').val().length<5){
+				tip_err_show(true,'用户名不能小于5位数！');
+				return false;
+			}else if($('.password_login').val().length<5){
+				tip_err_show(true,'密码不能小于5位数！');
+				return false;
+			}
+			return true;
+		}
+		function form_regi(){
+			if($('.username_regi').val().length<5){
+				tip_err_show(true,'用户名不能小于5位数！');
+				return false;
+			}else if($('.password_regi').val().length<5){
+				tip_err_show(true,'密码不能小于5位数！');
+				return false;
+			}
+			return true;
+		}
+
+		$('.btn_login').click(function(){
+			alert('123');
+			$.get('http://39.108.8.10/pcegg/user/login',$('#form_login').serialize(),function(data){
+					if(data.code ==200){
+						let username = $('.username_login').val();
+						sessionStorage.setItem('username',username);
+						window.location.href='home.html';
+
+					}else{
+						tip_err_show(true,'账号密码错误！');
+					}
+				},'json');
+		});
+		$('.btn_regi').click(function(){
+			alert('123');
+			if(form_regi()){
+				$.get('http://39.108.8.10/pcegg/user/register',$('#form_regi').serialize(),function(data){
+					if(data.code ==200){
+						alert('注册成功');
+						$('.login_sub').click();
+					}else{
+						tip_err_show(true,'注册失败！');
+					}
+				},'json');
+			}
+		});
+
+	});
+</script>
+</html>

@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0,  user-scalable=0;"
+	name="viewport" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+</head>
+<link rel="stylesheet" href="./css/main.css">
+<body class='bg'>
+	<div class='list'>
+
+		<div class='bdt'>
+			<div class='lbg'></div>
+			<div class='item_top'>
+				<p>序号</p>
+				<p>期数</p>
+				<p>收益</p>
+				 <p>详情</p> 
+			</div>
+			<!-- <div class='tip'>暂无数据</div> -->
+			<!-- <div class='item_tops'><div class='line'></div><p>1</p><p>第15151515期</p><p>+500分</p><p class='detail'>点击查看</p></div> -->
+
+		</div>
+
+
+
+
+		<div class='list_ggbg'></div>
+		<div class='aldetail'>
+			<p class='title'>详情</p>
+			<div class='con con_content'>
+				<p class='zvalue'>大2倍</p>
+				<p class='zvalue'>大2倍</p>
+				<p class='zvalue'>大2倍</p>
+				<p class='zvalue'>大2倍</p>
+				<p class='zvalue'>大2倍</p>
+				<p class='zvalue'>大2倍</p>
+				<p class='zvalue'>大2倍</p>
+				<p class='zvalue'>大2倍</p>
+				<p class='zvalue'>大2倍</p>
+				<p class='zvalue'>大2倍</p>
+				<p class='zvalue'>大2倍</p>
+				<p class='zvalue'>大2倍</p>
+			</div>
+		</div>
+
+		<div class='list_footer'>
+			<p class='list_item'></p>
+			<a class='upPage' href=""><div>上一页</div></a>
+			<div class='item_click'>
+				第<span class='this_page'></span>/<span class='pages'></span>页<img
+					src="./image/icon_down.png" alt="">
+			</div>
+			<a class='downPage' href=""><div>下一页</div></a>
+		</div>
+	</div>
+</body>
+<script src="./js/jquery-1.11.3.min.js"></script>
+<script src="./js/main.js"></script>
+<script>
+	var self =this;
+	var init ={
+		
+			init_data:function(page){
+				$.get('http://39.108.8.10/pcegg/record/allrecordbypage',{username:sessionStorage.getItem('username'),page:page},function(data){
+					$('.pages').text(data.totalpage);
+					$('.this_page').text(page);
+						if((parseInt(page)-1) != 0){
+							$('.upPage').attr('href','list.html?page='+(parseInt(page)-1));
+						}else{
+							$('.upPage').attr('href','list.html?page='+(parseInt(page)));
+						}
+						if((parseInt(page)+1) < data.totalpage+1){
+
+							$('.downPage').attr('href','list.html?page='+(parseInt(page)+1));
+						}else{
+
+							$('.downPage').attr('href','list.html?page='+parseInt(page));
+						}
+					for(var i=0;i<data.totalpage;i++){
+						$('.list_item').append("<a class='list_item_page' href='list.html?page="+(i+1)+"'><p>第<span>"+(i+1)+"</span>页</p ></ a>");
+					}
+					for(var num in data.obj){
+						if(data.obj.length != 0){
+							$('.bdt').append("<div class='item_tops'><div class='line'></div><p>"+(parseInt(num)+1)+"</p ><p>"+ data.obj[num].ccount+"</p ><p>"+data.obj[num].win+"分</p ><p class='detail' data-name='"+data.obj[num].ccount+"'>点击查看</p ></div>")
+							
+						}else{
+							$('.bdt').append("<div class='tip'>暂无数据</div>");
+						}
+					}
+					
+			  });
+			},
+		getUrlParam:function(name){
+			  var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+		     var r = window.location.search.substr(1).match(reg);
+		     if(r!=null)return  unescape(r[2]); return null;
+		},
+		display_detail:function(){
+			$('.aldetail').css('display','block');
+			$('.list_ggbg').css('display','block');
+		},
+	}
+	$(document).ready(function(){
+		if(self.init.getUrlParam('page') != null){
+			self.init.init_data(self.init.getUrlParam('page'));
+		}else{
+			self.init.init_data(1);
+		}
+		
+
+		$('.list_ggbg').click(function(){
+			$('.list_ggbg').css('display','none');
+			$('.aldetail').css('display','none');
+		})
+	});
+	$('body').on('click touchend','.detail',function(){
+		
+		$.get('http://39.108.8.10/pcegg/record/clickinfo',{comeptitionname:$(this).data('name')},function(data){
+			$('.con_content').find('.zvalue').remove();
+			for(let item of data.obj){
+				$('.con_content').append("<p class='zvalue'>"+item+"</p>");
+			}
+			self.init.display_detail();
+		});
+	});
+	
+</script>
+</html>

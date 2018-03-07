@@ -1,0 +1,189 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0,  user-scalable=0;" name="viewport" />
+	<meta http-equiv="Cache-Control" content="no-cache"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title></title>
+</head>
+<link rel="stylesheet" href="./css/main.css">
+<body class='bg'>
+<div class='my'>
+	<div class='top'>
+		<div class='top_bg'></div>
+		<div class='topitem'><img class='' src="./image/icon_QQ.png" alt=""><div class='tit'><p><img src="./image/white_vip.png" alt=""></p>普通VIP</div></div>
+		<div class='topitem name'><p class='my_name'>我的名字</p><p>积分: <span class='jifen'>0</span></p></div>
+	</div>
+
+	<div class='select1'>
+
+		<div class='add qq_click'><img src="./image/qqqrcode.png" style="display: none" class='upload_true_qq' alt=""><img id="qqqq" src="./image/add.png" alt=""><p>上传QQ二维码</p>	</div>	   
+		<div class='add wechat_click'><img src="./image/qqqrcode.png" style="display: none" class='upload_true_wechat' alt=""><img id="wechatwechat" src="./image/add.png" alt=""><p>上传微信二维码</p>  </div>
+		<div class='add alipay_click'><img src="./image/qqqrcode.png" style="display: none" class='upload_true_alipay' alt=""><img id="alipayalipay" src="./image/add.png" alt=""><p>上传支付宝二维码</p></div>
+
+		</form>
+		<form enctype="multipart/form-data" class='alipay_form file_pst'>
+			<input type="text" class='uname' name='username'>
+			<input type="text" class='pword' name='password'>
+			<input class='qq_file' accept="image/gif,image/jpeg,image/jpg,image/png,image/svg"   name='file' type="file">
+			<input class='wechat_file' accept="image/gif,image/jpeg,image/jpg,image/png,image/svg"   name='file' type="file">
+			<input class='alipay_file' accept="image/gif,image/jpeg,image/jpg,image/png,image/svg"   name='file' type="file">
+		</form>
+		<div class='zbg'></div>
+		<input class='dpt' placeholder="请输入收款银行卡账号" type="text">
+	</div>
+	<div class='select2'>
+		<div class='zbg'></div>
+		<div>上次登录地点: <span class='localtion'></span></div>
+		<div>上次登录时间: <span class='updatetime'></span></div>
+		<div class='logout'>退出登录 <img src="./image/right.png" alt=""></div>
+	</div>
+
+	<div class='alert'>
+		<div class='albg'></div>
+		<div class='tt'>
+			<div class='topz'>确认退出登录</div>
+			<div class='sub btn_yes' style="border-bottom-left-radius: 5px;">确认</div>
+			<div class='sub subb' style="border-bottom-right-radius: 5px;">取消</div>
+		</div>
+	</div>
+</div>
+<div class='tip_err'>
+		<img src="./image/err.png" alt="">
+		<p class='err_msg'></p>
+		<div class='close_err'>X</div>
+	</div>
+	<div class='timebg'></div>
+
+</body>
+<script src="./js/jquery-1.11.3.min.js"></script>
+<script>
+	var self =this;
+	var init ={
+		quit:function(){
+			$.get('http://39.108.8.10/pcegg/user/logout',{username:sessionStorage.getItem('username')},function(data){
+				sessionStorage.removeItem('username');
+				window.location.href='index.html';
+		  })
+		},
+		init_data:function(){
+			$.get('http://39.108.8.10/pcegg/user/info',{username:sessionStorage.getItem('username')},function(data){
+			$('.jifen').text(data.obj.usercredit);
+			$('.my_name').text(data.obj.username);
+			$('.localtion').text(data.obj.location);
+			$('.updatetime').text(data.obj.updatetime);
+			$('.uname').val(data.obj.username);
+			$('.pword').val(data.obj.password);
+			if(data.obj.qqqrcode != null){
+				$("#qqqq").css('display','none');
+				$('.upload_true_qq').css('display','block');
+			}
+			if(data.obj.alipayqrcode != null){
+				$("#alipayalipay").css('display','none');
+				$('.upload_true_alipay').css('display','block');
+			}
+			if(data.obj.wechatqrcode != null){
+				$("#wechatwechat").css('display','none');
+				$('.upload_true_wechat').css('display','block');
+			}
+		  });
+		},
+		init_click:function(){
+			$('.qq_click').on('click',function(){$('.qq_file').click();})
+			$('.wechat_click').on('click',function(){$('.wechat_file').click();})
+			$('.alipay_click').on('click',function(){$('.alipay_file').click();})
+		},
+		file_chang:function(){
+			
+
+			$('.qq_file').on('change',function(){
+			   var formFile = new FormData();
+               formFile.append('file',$('.qq_file')[0].files[0]);
+               formFile.append('username',$('.uname').val());
+               formFile.append('password',$('.pword').val());
+				$.ajax({ 
+					url: "http://39.108.8.10/pcegg/user/qq", 
+					type:'post',
+					contentType: false, 
+      				processData: false,
+					data:formFile, 
+					success: function(data){
+						if(data.code =='404'){tip_err_show(true,data.msg)}
+						$("#qqqq").css('display','none');
+						$('.upload_true_qq').css('display','block');
+					}
+				});
+			});
+
+			$('.wechat_file').on('change',function(){
+				var formFile = new FormData();
+               formFile.append('file',$('.wechat_file')[0].files[0]);
+               formFile.append('username',$('.uname').val());
+               formFile.append('password',$('.pword').val());
+				$.ajax({ 
+					url: "http://39.108.8.10/pcegg/user/wechat", 
+					type:'post',
+					contentType: false, 
+      				processData: false,
+					data:formFile, 
+					success: function(data){
+						if(data.code =='404'){tip_err_show(true,data.msg)}
+						$("#wechatwechat").css('display','none');
+						$('.upload_true_wechat').css('display','block');
+					}
+				});
+			});
+				
+			$('.alipay_file').on('change',function(){
+				var formFile = new FormData();
+               formFile.append('file',$('.alipay_file')[0].files[0]);
+               formFile.append('username',$('.uname').val());
+               formFile.append('password',$('.pword').val());
+				$.ajax({ 
+					url: "http://39.108.8.10/pcegg/user/alipay", 
+					type:'post',
+					contentType: false, 
+      				processData: false,
+					data:formFile, 
+					success: function(data){
+						if(data.code =='404'){tip_err_show(true,data.msg)}
+						$("#alipayalipay").css('display','none');
+						$('.upload_true_alipay').css('display','block');
+					}
+				});
+			});
+			
+
+		},
+	}
+	var tip_err_show = function(show,msg){
+		$('.err_msg').text(msg);
+		// 提示时间动画
+		if(show){
+			$('.tip_err').css('display','block');
+			$('.timebg').css('display','block');
+		}else{
+			$('.tip_err').css('display','none');
+			$('.timebg').css('display','none');
+		}
+	};
+	$(document).ready(function(){
+		init.init_click();
+		init.init_data();
+		init.file_chang();
+		$('.close_err').on('click',function(){init.tip_err_show(false)});
+
+	 	$('.logout').click(function(){
+			$('.alert').css("display","block");
+		});
+		$('.subb').click(function(){
+			$('.alert').css("display","none");
+		});
+		$('.btn_yes').click(function(){
+			self.init.quit();
+		})
+	});
+</script>
+</html>

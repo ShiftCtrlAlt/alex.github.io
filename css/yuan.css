@@ -1,0 +1,65 @@
+/*圆圈转圈*/
+.time_ss{
+    position: relative;
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    vertical-align: middle;
+}
+.zz_time{
+   position: absolute;
+    left: -5px;
+    width: 36px;
+    height: 36px;
+    text-align: center;
+    line-height: 26px!important}
+.circle {
+        width: 36px;
+        height: 36px;
+        position: absolute;
+        border-radius: 50%;
+        background: #0067B5;
+    }
+.circle_one {
+        width: 36px;
+        height: 36px;
+        position: absolute;
+        border-radius: 50%;
+        background: #0067B5;
+    }
+    .pie_left, .pie_right {
+        width:36px; 
+        height:36px;
+        position: absolute;
+        top: 0;left: 0;
+    }
+    .left, .right {
+        width:36px; 
+        height:36px;
+        background: #4EB0ED;
+        border-radius: 50%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    .pie_right, .right {
+        clip:rect(0,auto,auto,18px);
+    }
+    .pie_left, .left {
+        clip:rect(0,18px,auto,0);
+    }
+    .mask {
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        left: 5px;
+        top: 5px;
+        background: #FFF;
+        position: absolute;
+        text-align: center;
+        line-height: 26px;
+        font-size: 10px;
+        font-weight: bold;
+        color: #000;
+    }
+
