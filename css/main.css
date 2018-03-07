@@ -606,7 +606,7 @@ width: 100%;
     display: inline-block;
     line-height: 60px;
     font-size: 1.3rem;
-    width: 24%;
+    width: 35%;
     text-align: left;
 }
 .pay .item .value{
@@ -996,7 +996,16 @@ input[type="radio"] {
     right: 50%;
     top: 105%;
 }
-@media (width: 320px) {.bg{font-size: 0.1rem;}}
+@media (width: 320px) {
+.bg{font-size: 0.1rem;}
+.pay .item .tit{
+    display: inline-block;
+    line-height: 60px;
+    font-size: 1.3rem;
+    width: 35%;
+    text-align: left;
+}
+}
 @media (max-width: 400px) {
     .btn_post {
         width: 10%;
