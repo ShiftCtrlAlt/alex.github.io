@@ -324,9 +324,9 @@
 
 	<div class='loss_alert'>
 		<div class='top'>
-			<div class='item'>期数</div>
-			<div class='item'>下注记录</div>
-			<div class='item'>盈亏情况</div>
+			<div class='item item_one'>期数</div>
+			<div class='item item_two'>下注记录</div>
+			<div class='item item_three'>盈亏情况</div>
 		</div>
 		<div class='loss_body'>
 			<!-- <div class='item'>
@@ -499,8 +499,9 @@
 		  
 		},
 		update_loss:function(){
+		  $('.loss_body').find('.item').remove();
 			 // 获取盈亏信息
-		  $.get('http://39.108.8.10/pcegg/user/getIncome?username=test',function(data){
+		  $.get('http://39.108.8.10/pcegg/user/getIncome?username='+sessionStorage.getItem('username'),function(data){
 		  		let count = 0;
 	  	  		for(let item of data){
 	  	  			count += parseInt(item.win);
@@ -515,6 +516,9 @@
 		},
 		init_getHistor:function(){
 				//获取历史竞猜记录
+			$.get('http://39.108.8.10/pcegg/competition/isstart',function(data){
+				$('.num_qishu').text(data.competition);
+		    });
 		  $.get('http://39.108.8.10/pcegg/competition/competitioninfo',function(data){
 		  	$('.downs').children().remove();
 		  	$('.top_one').children().remove();
@@ -656,21 +660,15 @@
 			});
 		},
 		init_start:function(){
-			clearInterval(self.time_num);
-	  		self.time_num = setInterval(function(){
 				$.get('http://39.108.8.10/pcegg/competition/isstart',function(data){
-					$('.num_qishu').text(data.competition+2);
-					if(data.isstart == 'start'){self.init.is_start(true,data.time);}else{self.init.is_start(false,0);}
+					$('.num_qishu').text(data.competition);
+					if(data.isstart == 'start'){self.init.is_start(true,data.time);}else{self.init.is_start(false);}
 			    });
-			},60000);
 		},
 		is_start:function(boln,time){
 			self.init.update_loss();
 			if(boln){
 				self.init.game_start(time,100);
-				setTimeout(function(){
-					self.init.init_start();
-				},time);
 			}else{
 				self.init.game_our();
 			}
@@ -678,10 +676,10 @@
 		game_our:function(){
 			//游戏结束
 			$('.start_game').unbind('click');
-			
+			setTimeout(function(){self.init.init_start();},1000);
 		},
 		game_start:function(num,num2){
-			self.init.init_getHistor();
+			
 			// 游戏开始
 			var times = parseInt(num);
 			let dom_min = $('.circle_one').find('.time');
@@ -690,6 +688,7 @@
 			let dom_zz_sec = $('.circle').find('.zz_time');
 			let dom_time = $('.tip_time').find('.zz_time');
 			// 圈圈计时器
+			console.log('game-start')
 			let sec_inter = setInterval(function(){
 				times = times -1;
 				dom_min.text(Math.floor(times/60)*20);
@@ -703,10 +702,14 @@
 				if(times == 50){
 					self.init.tip_time_show(true);
 				}
-				if(times == 0){
-					clearInterval(sec_inter);
+				console.log(times)
+				if(times <= 0){
+					setTimeout(function(){self.init.init_getHistor();},17000);
+					self.init.init_start();
+					self.init.tip_time_show(false);
 					dom_zz_min.text(0);
 					dom_zz_sec.text(0);
+					clearInterval(sec_inter);
 				}
 			},1000);
 			$('.start_game').bind('click',function(){
@@ -722,12 +725,7 @@
 		init.init_click();
 		init.init_getHistor();
 		init.init_magnification();
-		$.get('http://39.108.8.10/pcegg/competition/isstart',function(data){
-			$('.num_qishu').text(data.competition+2);
-			if(data.isstart == 'start'){self.init.is_start(true,data.time);}else{
-				self.init.init_start();
-			}
-	    });
+		init.init_start();
 	})
 
 

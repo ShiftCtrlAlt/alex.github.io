@@ -40,9 +40,7 @@
 	</div>
 	<div class='timebg'></div>
 </body>
-<!-- <script src="./js/jquery-1.11.3.min.js"></script> -->
-	<script
-  src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="./js/jquery-1.11.3.min.js"></script>
 <script>
 
 var tip_err_show = function(show,msg){
@@ -89,21 +87,20 @@ var tip_err_show = function(show,msg){
 			return true;
 		}
 
-		$('.btn_login').on('click',function(){
-			//alert('123');
+		$('.btn_login').click(function(){
+			// alert('123');
 			$.get('http://39.108.8.10/pcegg/user/login',$('#form_login').serialize(),function(data){
 					if(data.code ==200){
 						let username = $('.username_login').val();
 						sessionStorage.setItem('username',username);
 						window.location.href='home.html';
-
 					}else{
 						tip_err_show(true,'账号密码错误！');
 					}
 				},'json');
 		});
-		$('.btn_regi').on('click',function(){
-			//alert('123');
+		$('.btn_regi').click(function(){
+			// alert('123');
 			if(form_regi()){
 				$.get('http://39.108.8.10/pcegg/user/register',$('#form_regi').serialize(),function(data){
 					if(data.code ==200){
