@@ -55,13 +55,13 @@ var tip_err_show = function(show,msg){
 	}
 };
 	$(document).ready(function(){
-		$('.close_err').on('click',function(){tip_err_show(false)});
+		$('.close_err').on('touchend click',function(){tip_err_show(false)});
 
-	 	$('.login_sub').click(function(){
+	 	$('.login_sub').on('touchend click',function(){
 			$('.lgin').css("display","block");
 			$('.regi').css("display","none");
 		});
-		$('.resgi_sub').click(function(){
+		$('.resgi_sub').on('touchend click',function(){
 			$('.lgin').css("display","none");
 			$('.regi').css("display","block");
 		});
@@ -87,7 +87,7 @@ var tip_err_show = function(show,msg){
 			return true;
 		}
 
-		$('.btn_login').click(function(){
+		$('.btn_login').on('touchend click',function(){
 			// alert('123');
 			$.get('http://39.108.8.10/pcegg/user/login',$('#form_login').serialize(),function(data){
 					if(data.code ==200){
@@ -99,7 +99,7 @@ var tip_err_show = function(show,msg){
 					}
 				},'json');
 		});
-		$('.btn_regi').click(function(){
+		$('.btn_regi').on('touchend click',function(){
 			// alert('123');
 			if(form_regi()){
 				$.get('http://39.108.8.10/pcegg/user/register',$('#form_regi').serialize(),function(data){

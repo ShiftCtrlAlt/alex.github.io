@@ -532,7 +532,7 @@
 		  });
 		},
 		init_click:function (){
-			$('.retu').click(function(){
+			$('.retu').on('touchend click',function(){
 				self.init.quit();
 			});
 			$(".top_one").on("click",function(){
@@ -544,37 +544,37 @@
 					$(this).addClass('up');
 				}
 			});
-			$('.close').on('click',function(){init.tip_time_show(false)});
-			$('.close_err').on('click',function(){init.tip_err_show(false)});
-			$('.close_post').on('click',function(){init.tip_post_show(false)});
-			$('.loss_close').on('click',function(){init.tip_loss_show(false)});
-			$('.click_loss').on('click',function(){init.tip_loss_show(true)});
-			$('.click_post').on('click',function(){
+			$('.close').on('touchend click',function(){init.tip_time_show(false)});
+			$('.close_err').on('touchend click',function(){init.tip_err_show(false)});
+			$('.close_post').on('touchend click',function(){init.tip_post_show(false)});
+			$('.loss_close').on('touchend click',function(){init.tip_loss_show(false)});
+			$('.click_loss').on('touchend click',function(){init.tip_loss_show(true)});
+			$('.click_post').on('touchend click',function(){
 				init.tip_post_show(true);
 				$('.btn_msg').css('display','none');
 			});
-			$('.one_pg_tema').on('click',function(){
+			$('.one_pg_tema').on('touchend click',function(){
 				$('.one_pg').css('bottom','-200%');
 				$('.two_pg').css('bottom','0');
 			});
-			$('.pg_close').on('click',function(){
+			$('.pg_close').on('touchend click',function(){
 				$('.one_pg').css('bottom','-200%');
 			});
-			$('.two_pg_return').on('click',function(){
+			$('.two_pg_return').on('touchend click',function(){
 				$('.one_pg').css('bottom','0');
 				$('.two_pg').css('bottom','-200%');
 			});
-			$('.two_pg_return').on('click',function(){
+			$('.two_pg_return').on('touchend click',function(){
 				$('.one_pg').css('bottom','0');
 				$('.two_pg').css('bottom','-200%');
 			});
-			$('.two_pg_clear').on('click',function(){
+			$('.two_pg_clear').on('touchend click',function(){
 				$('.two_put').val('');
 			});
-			$('.one_pg_clear').on('click',function(){
+			$('.one_pg_clear').on('touchend click',function(){
 				$('.one_put').val('');
 			});
-			$('.form_pg_sub').on('click',function(){
+			$('.form_pg_sub').on('touchend click',function(){
 
 				$.post('http://39.108.8.10/pcegg/competition/startbet?username='+sessionStorage.getItem('username'),$('#form_bg_action').serialize(),function(data){
 						$('.one_pg').css('bottom','-200%');

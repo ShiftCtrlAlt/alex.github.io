@@ -91,9 +91,9 @@
 		  });
 		},
 		init_click:function(){
-			$('.qq_click').on('click',function(){$('.qq_file').click();})
-			$('.wechat_click').on('click',function(){$('.wechat_file').click();})
-			$('.alipay_click').on('click',function(){$('.alipay_file').click();})
+			$('.qq_click').on('touchend click',function(){$('.qq_file').click()})
+			$('.wechat_click').on('touchend click',function(){$('.wechat_file').click()})
+			$('.alipay_click').on('touchend click',function(){$('.alipay_file').click()})
 		},
 		file_chang:function(){
 			
@@ -173,15 +173,15 @@
 		init.init_click();
 		init.init_data();
 		init.file_chang();
-		$('.close_err').on('click',function(){init.tip_err_show(false)});
+		$('.close_err').on('touchend click',function(){init.tip_err_show(false)});
 
-	 	$('.logout').click(function(){
+	 	$('.logout').on('touchend click',function(){
 			$('.alert').css("display","block");
 		});
-		$('.subb').click(function(){
+		$('.subb').on('touchend click',function(){
 			$('.alert').css("display","none");
 		});
-		$('.btn_yes').click(function(){
+		$('.btn_yes').on('touchend click',function(){
 			self.init.quit();
 		})
 	});

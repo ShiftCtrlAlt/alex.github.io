@@ -72,17 +72,17 @@
 		},
 		init_click:function(){
 			//$('.username').val(sessionStorage.getItem('username'));
-			$('.checked').click(function(){
+			$('.checked').on('touchend click',function(){
 			self.init.post_form();
 			});
-			$('.rtn').click(function(){
+			$('.rtn').on('touchend click',function(){
 				window.history.go(-1);
 			});
 		}
 	}
 	$(document).ready(function(){
 		init.init_click();
-		$('.close_err').on('click',function(){tip_err_show(false)});
+		$('.close_err').on('click touchend',function(){tip_err_show(false)});
 	});
 </script>
 </html>
