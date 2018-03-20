@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta http-equiv="Cache-Control" content="no-siteapp" />
@@ -607,9 +607,9 @@
 							$('.start_game').css('width',"43%");
 							$('.our_game').css('display','block');
 						for(let item of data.obj){
-							$('.content').append("<div class='row user_content_"+$('.num_qishu').text()+"'><img src='./image/icon_QQ.png' /><div class='rit'><div class='top'><p>"+self.info.username+"</p ><div class='tit'><p><img src='./image/white_vip.png' /></p >普通VIP</div></div><div class='tdown'>"+item+"</div></div>");
+							
 						}
-
+						$('.content').append("<div class='row user_content_"+$('.num_qishu').text()+"'><img src='./image/icon_QQ.png' /><div class='rit'><div class='top'><p>"+self.info.username+"</p ><div class='tit'><p><img src='./image/white_vip.png' /></p >普通VIP</div></div><div class='tdown'>"+data.obj.toString().replace(',',"&nbsp;&nbsp;&nbsp;")+"</div></div>");
 					}else{
 						self.init.tip_err_show(true,data.msg);
 					}
