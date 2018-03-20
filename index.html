@@ -19,7 +19,7 @@
 			<input class='dpt username_login' name='username' minlength='5' maxlength='16' placeholder="用户名（5-16位）" type="text">
 			<input class='dpt password_login' name='password' minlength='5' maxlength='16' placeholder="密码（5-16位）" type="password">
 		</form>
-		<button class='btn btn_login' onclick=''>确认登录</button>
+		<div class='btn btn_login'>确认登录</div>
 	</div>
 	<div class='contain regi disp_none'>
 		<div class="pg"></div>
@@ -30,7 +30,7 @@
 			<input class='dpt password_regi' name='password' minlength='5' maxlength='16' placeholder="密码（5-16位）" type="password">
 			
 		</form>
-		<button class='btn btn_regi' onclick='' >确认注册</button>
+		<div class='btn btn_regi'>确认注册</div>
 	</div>
 	</div>
 	<div class='tip_err'>
@@ -54,7 +54,16 @@ var tip_err_show = function(show,msg){
 		$('.timebg').css('display','none');
 	}
 };
-	$(document).ready(function(){
+		// 更新title
+	  	$.get('http://39.108.8.10/pcegg/html/getTitle',function(data){
+				 $(document).attr("title",data.title); 
+		});
+		var tit_html = setInterval(function(){
+			$.get('http://39.108.8.10/pcegg/html/getTitle',function(data){
+				 if($(document).attr("title") != data.title){$(document).attr("title",data.title);};
+			});
+		},10000);
+
 		$('.close_err').on('touchend click',function(){tip_err_show(false)});
 
 	 	$('.login_sub').on('touchend click',function(){
@@ -87,8 +96,7 @@ var tip_err_show = function(show,msg){
 			return true;
 		}
 
-		$('.btn_login').on('touchend click',function(){
-			// alert('123');
+		$(document).on("click",".btn_login",function(){
 			$.get('http://39.108.8.10/pcegg/user/login',$('#form_login').serialize(),function(data){
 					if(data.code ==200){
 						let username = $('.username_login').val();
@@ -99,7 +107,7 @@ var tip_err_show = function(show,msg){
 					}
 				},'json');
 		});
-		$('.btn_regi').on('touchend click',function(){
+		$(document).on("click",".btn_regi",function(){
 			// alert('123');
 			if(form_regi()){
 				$.get('http://39.108.8.10/pcegg/user/register',$('#form_regi').serialize(),function(data){
@@ -112,7 +120,5 @@ var tip_err_show = function(show,msg){
 				},'json');
 			}
 		});
-
-	});
 </script>
 </html>

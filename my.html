@@ -6,7 +6,7 @@
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0,  user-scalable=0;" name="viewport" />
 	<meta http-equiv="Cache-Control" content="no-cache"/>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title></title>
+	<title>PC蛋蛋房间46</title>
 </head>
 <link rel="stylesheet" href="./css/main.css">
 <body class='bg'>
@@ -60,6 +60,15 @@
 </body>
 <script src="./js/jquery-1.11.3.min.js"></script>
 <script>
+	// 更新title
+	  	$.get('http://39.108.8.10/pcegg/html/getTitle',function(data){
+				 $(document).attr("title",data.title); 
+		});
+		var tit_html = setInterval(function(){
+			$.get('http://39.108.8.10/pcegg/html/getTitle',function(data){
+				 if($(document).attr("title") != data.title){$(document).attr("title",data.title);};
+			});
+		},10000);
 	var self =this;
 	var init ={
 		quit:function(){
@@ -91,9 +100,9 @@
 		  });
 		},
 		init_click:function(){
-			$('.qq_click').on('touchend click',function(){$('.qq_file').click()})
-			$('.wechat_click').on('touchend click',function(){$('.wechat_file').click()})
-			$('.alipay_click').on('touchend click',function(){$('.alipay_file').click()})
+			$(document).on('click','.qq_click',function(){$('.qq_file').click()})
+			$(document).on('click','.wechat_click',function(){$('.wechat_file').click()})
+			$(document).on('click','.alipay_click',function(){$('.alipay_file').click()})
 		},
 		file_chang:function(){
 			
@@ -173,15 +182,15 @@
 		init.init_click();
 		init.init_data();
 		init.file_chang();
-		$('.close_err').on('touchend click',function(){init.tip_err_show(false)});
+		$(document).on('click','.close_err',function(){init.tip_err_show(false)});
 
-	 	$('.logout').on('touchend click',function(){
+	 	$(document).on('click','.logout',function(){
 			$('.alert').css("display","block");
 		});
-		$('.subb').on('touchend click',function(){
+		$(document).on('click','.subb',function(){
 			$('.alert').css("display","none");
 		});
-		$('.btn_yes').on('touchend click',function(){
+		$(document).on('click','.btn_yes',function(){
 			self.init.quit();
 		})
 	});

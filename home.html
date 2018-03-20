@@ -8,7 +8,7 @@
 	name="viewport" />
 <meta http-equiv="Cache-Control" content="no-cache" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title></title>
+<title>PC蛋蛋房间46</title>
 </head>
 <link rel="stylesheet" href="./css/main.css">
 <link rel="stylesheet" href="./css/yuan.css">
@@ -22,7 +22,7 @@
 				<img src="./image/room_time.png" alt="">
 				<p>距离</p>
 				<p class='redt num_qishu'>999999</p>
-				<p>期开始竞猜:</p>
+				<p>封盘还剩:</p>
 				<div class='time_ss'>
 					<div class="circle_one" style="left: 0">
 						<div class="pie_left">
@@ -76,8 +76,8 @@
 			<div class='rit'>
 				<div class='top'><p>昵称</p><div class='tit'><p><img src='./image/white_vip.png'/></p>普通VIP</div></div>
 				<div class='tdown'>70大130双</div>
-			</div> -->
-	</div>
+			</div>
+	</div> -->
 	</div>
 <div class='bottom_bg'></div>
 	<form action="" id='form_bg_action'>
@@ -360,12 +360,12 @@
 	<div class='my_tab'>
 		<a href="my.html"><p>个人信息</p></a><a href="list.html"><p>游戏记录</p></a>
 	</div>
-	<div class='ft-btn start_game'>竞猜</div>
+	<div class='ft-btn start_game'>竞猜</div><div class='ft-btn_our our_game'>取消竞猜</div>
 	<div class='footer'>
-		<div class='bar retu'>
+		<!-- <div class='bar retu'>
 			<img src="./image/tab1.png" alt="">
 			<p>返回</p>
-		</div>
+		</div> -->
 		<div class='bar room'>
 			<img src="./image/tab2.png" alt="">
 			<p>房间</p>
@@ -458,7 +458,6 @@
 	  	 var one_second = setInterval(function(){
 				$.get('http://39.108.8.10/pcegg/competition/whystop',function(data){
 					if(data.obj != null){
-						
 						self.init.tip_err_show(true,data.msg);
 						clearInterval(one_second);
 					}
@@ -481,6 +480,21 @@
 				}
 		    });
 		},20000);
+		// 更新title
+	  	$.get('http://39.108.8.10/pcegg/html/getTitle',function(data){
+				 $(document).attr("title",data.title); 
+		});
+		var tit_html = setInterval(function(){
+			$.get('http://39.108.8.10/pcegg/html/getTitle',function(data){
+				 if($(document).attr("title") != data.title){$(document).attr("title",data.title);};
+			});
+		},10000);
+
+		var dom_jifen = setInterval(function(){
+			$.get('http://39.108.8.10/pcegg/user/info',{username:sessionStorage.getItem('username')},function(data){
+			$('.jifen').text(data.obj.usercredit);
+		  });
+		},10000);
 			 //获取用户信息
 		  $.get('http://39.108.8.10/pcegg/user/info',{username:sessionStorage.getItem('username')},function(data){
 			$('.jifen').text(data.obj.usercredit);
@@ -532,10 +546,10 @@
 		  });
 		},
 		init_click:function (){
-			$('.retu').on('touchend click',function(){
+			$(document).on('click','.retu',function(){
 				self.init.quit();
 			});
-			$(".top_one").on("click",function(){
+			$(document).on("click",'.top_one',function(){
 				if($(this).hasClass('up')){
 					$('.downs').animate({height:'0%'},500);
 					$(this).removeClass('up');
@@ -544,37 +558,45 @@
 					$(this).addClass('up');
 				}
 			});
-			$('.close').on('touchend click',function(){init.tip_time_show(false)});
-			$('.close_err').on('touchend click',function(){init.tip_err_show(false)});
-			$('.close_post').on('touchend click',function(){init.tip_post_show(false)});
-			$('.loss_close').on('touchend click',function(){init.tip_loss_show(false)});
-			$('.click_loss').on('touchend click',function(){init.tip_loss_show(true)});
-			$('.click_post').on('touchend click',function(){
+			$(document).on('click','.close',function(){init.tip_time_show(false)});
+			$(document).on('click','.close_err',function(){init.tip_err_show(false)});
+			$(document).on('click','.close_post',function(){init.tip_post_show(false)});
+			$(document).on('click','.loss_close',function(){init.tip_loss_show(false)});
+			$(document).on('click','.click_loss',function(){init.tip_loss_show(true)});
+			$(document).on('click','.click_post',function(){
 				init.tip_post_show(true);
 				$('.btn_msg').css('display','none');
 			});
-			$('.one_pg_tema').on('touchend click',function(){
+			$(document).on('click','.one_pg_tema',function(){
 				$('.one_pg').css('bottom','-200%');
 				$('.two_pg').css('bottom','0');
 			});
-			$('.pg_close').on('touchend click',function(){
+			$(document).on('click','.pg_close',function(){
 				$('.one_pg').css('bottom','-200%');
 			});
-			$('.two_pg_return').on('touchend click',function(){
+			$(document).on('click','.two_pg_return',function(){
 				$('.one_pg').css('bottom','0');
 				$('.two_pg').css('bottom','-200%');
 			});
-			$('.two_pg_return').on('touchend click',function(){
+			$(document).on('click','.two_pg_return',function(){
 				$('.one_pg').css('bottom','0');
 				$('.two_pg').css('bottom','-200%');
 			});
-			$('.two_pg_clear').on('touchend click',function(){
+			$(document).on('click','.two_pg_clear',function(){
 				$('.two_put').val('');
 			});
-			$('.one_pg_clear').on('touchend click',function(){
+			$(document).on('click','.one_pg_clear',function(){
 				$('.one_put').val('');
 			});
-			$('.form_pg_sub').on('touchend click',function(){
+			$(document).on('click','.our_game',function(){
+				$.get('http://39.108.8.10/pcegg/user/deleteCompetiton',{username:sessionStorage.getItem('username'),competitionname:"第"+(parseInt($('.num_qishu').text())-1)+"期竞猜"},function(data){
+				 		$('.start_game').css('width',"90%");
+						$('.our_game').css('display','none');
+						$('.user_content_'+$('.num_qishu').text()).remove();
+						alert(data.msg);
+				});
+			});
+			$(document).on('click','.form_pg_sub',function(){
 
 				$.post('http://39.108.8.10/pcegg/competition/startbet?username='+sessionStorage.getItem('username'),$('#form_bg_action').serialize(),function(data){
 						$('.one_pg').css('bottom','-200%');
@@ -582,9 +604,12 @@
 						$('.one_put').val('');
 						$('.two_put').val('');
 						if(data.code == 200){
+							$('.start_game').css('width',"43%");
+							$('.our_game').css('display','block');
 						for(let item of data.obj){
-							$('.content').append("<div class='row'><img src='./image/icon_QQ.png' /><div class='rit'><div class='top'><p>"+self.info.username+"</p ><div class='tit'><p><img src='./image/white_vip.png' /></p >普通VIP</div></div><div class='tdown'>"+item+"</div></div>");
+							$('.content').append("<div class='row user_content_"+$('.num_qishu').text()+"'><img src='./image/icon_QQ.png' /><div class='rit'><div class='top'><p>"+self.info.username+"</p ><div class='tit'><p><img src='./image/white_vip.png' /></p >普通VIP</div></div><div class='tdown'>"+item+"</div></div>");
 						}
+
 					}else{
 						self.init.tip_err_show(true,data.msg);
 					}
@@ -699,7 +724,9 @@
 				dom_time.text(times);
 				self.init.init_test();
 				self.init.init_one();
-				if(times == 50){
+				if(times == 80){
+					$('.start_game').css('width',"90%");
+					$('.our_game').css('display','none');
 					self.init.tip_time_show(true);
 				}
 				console.log(times)

@@ -8,7 +8,7 @@
 	name="viewport" />
 <meta http-equiv="Cache-Control" content="no-cache" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title></title>
+	<title>PC蛋蛋房间46</title>
 </head>
 <link rel="stylesheet" href="./css/main.css">
 <body class='bg'>
@@ -64,6 +64,16 @@
 <script src="./js/main.js"></script>
 <script>
 	var self =this;
+	// 更新title
+	  	$.get('http://39.108.8.10/pcegg/html/getTitle',function(data){
+				 $(document).attr("title",data.title); 
+		});
+		var tit_html = setInterval(function(){
+			$.get('http://39.108.8.10/pcegg/html/getTitle',function(data){
+				 if($(document).attr("title") != data.title){$(document).attr("title",data.title);};
+			});
+		},10000);
+		
 	var init ={
 		
 			init_data:function(page){
@@ -114,12 +124,12 @@
 		}
 		
 
-		$('.list_ggbg').on('touchend click',function(){
+		$(document).on('click','.list_ggbg',function(){
 			$('.list_ggbg').css('display','none');
 			$('.aldetail').css('display','none');
 		})
 	});
-	$('body').on('click touchend','.detail',function(){
+	$(document).on('click','.detail',function(){
 		
 		$.get('http://39.108.8.10/pcegg/record/clickinfo',{comeptitionname:$(this).data('name')},function(data){
 			$('.con_content').find('.zvalue').remove();

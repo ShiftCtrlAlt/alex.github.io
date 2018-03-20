@@ -6,16 +6,16 @@
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0,  user-scalable=0;" name="viewport" />
 	<meta http-equiv="Cache-Control" content="no-cache"/>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title></title>
+	<title>PC蛋蛋房间46</title>
 </head>
 <link rel="stylesheet" href="./css/main.css">
 <body style='background-color: #eee'>
 <div class='pay'>
 	<form class='form_post' >
 	<div style='background-color: #fff'>
-		<div class='item'><p class='tit'>用户名</p><input class='value' placeholder="请填写本人用户名" name='username' type="text"></div>
+		<div class='item'><p class='tit'>用户名</p><input class='value username'  disabled="disabled" type="text"></div>
 		<div class='item'><p class='tit'>下分数量</p><input class='value' placeholder="请输入下分数量" name='credit' type="number"></div>
-		<!-- <input type="text" name="username" style='display: none' class='username'> -->
+		<input type="text" name="username" style='display: none' class='username'>
 		<div class='item'><p class='tit'>收款方式</p>
 			<div class='pt'>
 				<img src="./image/icon_wechat.png" alt="">
@@ -44,12 +44,20 @@
 		<p class='err_msg'></p>
 		<div class='close_err'>X</div>
 	</div>
-	<div class='timebg'></div>
-
+<div class='timebg'></div>
 </body>
 <script src="./js/jquery-1.11.3.min.js"></script>
 <script src="./js/main.js"></script>
 <script>
+	// 更新title
+	  	$.get('http://39.108.8.10/pcegg/html/getTitle',function(data){
+				 $(document).attr("title",data.title); 
+		});
+		var tit_html = setInterval(function(){
+			$.get('http://39.108.8.10/pcegg/html/getTitle',function(data){
+				 if($(document).attr("title") != data.title){$(document).attr("title",data.title);};
+			});
+		},10000);
 	var self =this;
 	var tip_err_show = function(show,msg){
 		$('.err_msg').text(msg);
@@ -67,22 +75,24 @@
 			$.get('http://39.108.8.10/pcegg/user/userdowncredit',$('.form_post').serialize(),function(data){
 				if(data.code == '404'){
 					tip_err_show(true,data.msg);
+				}else{
+					alert(data.msg);
 				}
 			},'json');
 		},
 		init_click:function(){
-			//$('.username').val(sessionStorage.getItem('username'));
-			$('.checked').on('touchend click',function(){
+			$('.username').val(sessionStorage.getItem('username'));
+			$(document).on('click','.checked',function(){
 			self.init.post_form();
 			});
-			$('.rtn').on('touchend click',function(){
-				window.history.go(-1);
+			$(document).on('click','.rtn',function(){
+				window.location.href='home.html';
 			});
 		}
 	}
 	$(document).ready(function(){
 		init.init_click();
-		$('.close_err').on('click touchend',function(){tip_err_show(false)});
+		$(document).on('click','.close_err',function(){tip_err_show(false)});
 	});
 </script>
 </html>
