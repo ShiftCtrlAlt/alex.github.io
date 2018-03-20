@@ -239,15 +239,14 @@ body,div,p,span {padding: 0;margin:0;}
 
 
 
-.row {height: 80px;margin-top: 0;    margin-left: 5%;padding-top: 25px;}
+.row {height: 80px;margin-top: 0;    margin-left: 5%;padding-top: 15px;}
 
-.row img:first-child{width:55px;height:55px;margin-right: 3%;border-radius: 70px;}
-.row .rit{display: inline-block;    vertical-align: top;font-size: 15px;
-}
+.row img:first-child{width:45px;height:45px;margin-right: 3%;border-radius: 70px;}
+.row .rit{display: inline-block;    vertical-align: top;font-size:0.3rem;}
 .row .top p{display: inline-block;color: #fff;}
 .row .top img{
-	width: 20px;
-    height: 20px;
+	width: 13px;
+    height: 13px;
     vertical-align: text-top;
     padding-right: 4px;
 }
@@ -263,7 +262,7 @@ body,div,p,span {padding: 0;margin:0;}
     display: inline-block;
     /* margin-left: 10px; */
     margin-top: 5px;
-    padding: 3px 30px;
+    padding: 3px 10px;
     background-color: #00A0E8;
     border-radius: 6px;
     color: #fff;
